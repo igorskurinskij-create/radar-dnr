@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Свежие объявления Apple, Dyson и PlayStation из барахолок ДНР: Telegram и ВКонтакте в одной ленте, без дублей.">
+<meta name="referrer" content="no-referrer">
+<title>Радар техники ДНР</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232563eb'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='white' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='5' fill='white'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f4f5f7; --panel:#ffffff; --ink:#15171a; --muted:#6b7280; --line:#e5e7eb;
+  --accent:#2563eb; --accent-ink:#fff; --new:#16a34a; --warn:#b45309; --err:#dc2626;
+  --chip:#eef0f3; --vk:#0077ff; --tg:#229ed9;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#0e1013;--panel:#171a1f;--ink:#e8eaed;--muted:#9aa1ab;--line:#262a31;
+    --accent:#3b82f6;--chip:#22262d;--shadow:0 1px 2px rgba(0,0,0,.4)}
+}
+:root[data-theme="dark"]{--bg:#0e1013;--panel:#171a1f;--ink:#e8eaed;--muted:#9aa1ab;--line:#262a31;
+  --accent:#3b82f6;--chip:#22262d;--shadow:0 1px 2px rgba(0,0,0,.4)}
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}
+header{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line)}
+.wrap{max-width:1280px;margin:0 auto;padding-left:16px;padding-right:16px}
+.bar{padding-top:12px;padding-bottom:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+h1{font-size:18px;margin:0;font-weight:700;letter-spacing:-.01em}
+h1 span{color:var(--accent)}
+.status{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px;margin-left:auto;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+.dot.live{background:var(--new);animation:pulse 2s infinite}
+.dot.snap{background:var(--warn)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.5)}70%{box-shadow:0 0 0 8px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+button{font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+.filters{padding-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border-radius:999px;padding:5px 12px;background:var(--chip);border:1px solid transparent;cursor:pointer;font-size:14px;user-select:none}
+.chip.on{background:var(--accent);color:var(--accent-ink)}
+select,input{font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:6px 10px;min-width:0;max-width:100%}
+input[type=number]{width:96px}
+input[type=search]{flex:1 1 180px}
+.toggles{display:flex;gap:10px;color:var(--muted);font-size:13px;align-items:center}
+.toggles label{display:flex;gap:4px;align-items:center;cursor:pointer}
+main{padding-top:16px;padding-bottom:16px}
+.notice{font-size:13px;padding:10px 12px;border-radius:10px;background:var(--chip);color:var(--muted);margin:0 0 12px}
+.notice b{color:var(--ink)}
+.summary{color:var(--muted);font-size:13px;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative;min-width:0}
+.card.fresh{outline:2px solid var(--new)}
+.ph{aspect-ratio:16/10;max-height:240px;width:100%;background:var(--chip) center/cover no-repeat;position:relative}
+.ph .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px}
+.badges{position:absolute;top:8px;left:8px;right:8px;display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.92);color:#111}
+.b.new{background:var(--new);color:#fff}
+.b.buy{background:var(--warn);color:#fff}
+.b.vk{background:var(--vk);color:#fff} .b.tg_chat{background:var(--tg);color:#fff}
+.b.rep{background:#7c3aed;color:#fff}
+.tag{display:inline-block;font-size:12px;font-weight:600;background:var(--chip);border-radius:6px;padding:2px 7px;color:var(--ink)}
+.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+.model{font-weight:650;font-size:16px;line-height:1.25;overflow-wrap:anywhere}
+.price{font-size:22px;font-weight:750;letter-spacing:-.02em}
+.price.none{font-size:15px;color:var(--muted);font-weight:500}
+.meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.contacts{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.contacts a{background:var(--chip);border-radius:8px;padding:4px 8px;font-size:13px;font-weight:600;color:var(--ink)}
+.contacts a:hover{background:var(--accent);color:#fff}
+.txt{font-size:13px;color:var(--muted);white-space:pre-wrap;max-height:4.4em;overflow:hidden;cursor:pointer;overflow-wrap:anywhere}
+.txt.open{max-height:none;color:var(--ink)}
+.also{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.also a{margin-right:6px}
+.foot{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-top:auto;padding-top:6px;border-top:1px dashed var(--line)}
+.foot .src{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.empty{padding:60px 16px;text-align:center;color:var(--muted)}
+.more{display:block;margin:16px auto 0}
+.about{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;color:var(--muted);font-size:14px}
+.about h2{font-size:15px;color:var(--ink);margin:0 0 8px}
+.about ul{margin:0;padding-left:18px}
+.about li{margin:3px 0}
+.pill{font-size:11px;padding:1px 6px;border-radius:999px;background:var(--chip);color:var(--muted);margin-left:4px;white-space:nowrap}
+footer{color:var(--muted);font-size:12px;padding-top:24px;padding-bottom:32px}
+@media (max-width:600px){
+  .status{margin-left:0;width:100%}
+  input[type=number]{width:80px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <h1>Радар <span>техники</span> ДНР</h1>
+    <div class="status">
+      <span class="dot" id="dot"></span><span id="stat">загрузка…</span>
+      <button id="btnTheme" title="Сменить тему">◐</button>
+    </div>
+  </div>
+  <div class="wrap filters">
+    <div class="chips" id="brands"></div>
+    <select id="src" aria-label="Источник"><option value="">Все источники</option><option value="tg_channel">TG-каналы</option>
+      <option value="tg_chat">TG-чаты</option><option value="vk">Группы VK</option></select>
+    <select id="city" aria-label="Город"><option value="">Все города</option></select>
+    <input type="number" id="min" placeholder="от ₽" min="0" step="1000" aria-label="Цена от">
+    <input type="number" id="max" placeholder="до ₽" min="0" step="1000" aria-label="Цена до">
+    <select id="days" aria-label="Период">
+      <option value="0.25">6 часов</option><option value="1">24 часа</option><option value="3" selected>3 дня</option>
+      <option value="7">7 дней</option>
+    </select>
+    <select id="kind" aria-label="Тип объявления">
+      <option value="sell" selected>Продажа</option><option value="buy">Куплю</option>
+      <option value="service">Магазины/услуги</option><option value="all">Всё</option>
+    </select>
+    <input type="search" id="q" placeholder="Поиск: 15 pro, airwrap, ps5 slim…" aria-label="Поиск">
+    <div class="toggles">
+      <label><input type="checkbox" id="snd"> звук</label>
+      <label><input type="checkbox" id="ntf"> уведомления</label>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="notice" id="notice" hidden></p>
+  <p class="summary" id="summary"></p>
+  <div class="grid" id="grid"></div>
+  <button class="more" id="more" hidden>Показать ещё</button>
+  <div class="empty" id="empty" hidden>По этим фильтрам объявлений нет. Попробуйте увеличить период или убрать часть фильтров.</div>
+
+  <section class="about" id="about">
+    <div>
+      <h2>Что это</h2>
+      Радар собирает объявления о продаже <b>Apple, Dyson и PlayStation</b> из барахолок ДНР в Telegram и ВКонтакте
+      и показывает их в одной ленте: модель, цена, город, контакт продавца и ссылка на оригинальный пост.
+    </div>
+    <div>
+      <h2>Без дублей</h2>
+      Если одно объявление выложено в нескольких барахолках, вы увидите одну карточку и список, где ещё оно опубликовано.
+      Значок <span class="b rep" style="font-size:11px">перезалив</span> — продавец выкладывает объявление не первый день.
+    </div>
+    <div>
+      <h2>Источники</h2>
+      <ul id="srcList"></ul>
+    </div>
+    <div>
+      <h2>Важно</h2>
+      Модель, цена и город определяются по тексту автоматически и иногда с ошибками — перед звонком откройте оригинальный пост.
+      Проверяйте технику при встрече и не переводите предоплату незнакомым продавцам.
+    </div>
+  </section>
+  <footer id="footer"></footer>
+</main>
+
+<!-- Настройки: откуда брать свежую ленту. Заполняются автоматически командой публикации радара. -->
+<script id="radar-config" type="application/json">{"repo":"igorskurinskij-create/radar-dnr","branch":"data","title":"Радар техники ДНР","refresh_sec":120}</script>
+<!-- Встроенный снимок ленты: показывается, если свежие данные недоступны (например, при открытии файла без интернета). -->
+<script id="radar-snapshot" type="application/json">{"generated":"2026-11-24T19:44:42+00:00","title":"Радар техники ДНР","brands":{"apple":"Apple","dyson":"Dyson","playstation":"PlayStation"},"categories":{"general":"Общая барахолка","apple":"Apple","dyson":"Dyson","playstation":"Консоли / PlayStation"},"src_types":{"tg_channel":"TG-канал","tg_chat":"TG-чат","vk":"Группа VK"},"sources":[{"type":"tg_channel","title":"@appledn","category":"apple"},{"type":"tg_channel","title":"@donetsk_bu","category":"general"},{"type":"tg_channel","title":"@clubsellfast","category":"general"}],"cities":["Горловка","Донецк","Макеевка","Шахтёрск"],"items":[{"id":"donetsk_bu/173241","url":"https://t.me/donetsk_bu/173241","date":"2026-11-24T17:40:43+00:00","model":"iPhone 12 Pro Max","price":28000,"city":"Донецк","kind":"sell","src":"@donetsk_bu","src_type":"tg_channel","brands":["apple"],"text":"Продам iPhone 12 Pro Max, б/у, Донецк, 28 000 ₽\nПродам iPhone 12 Pro Max. Состояние батареи — 76. Причина продажи — покупка нового. В комплекте чехол, зарядное устройство, блок, защитные стёкла. Носился в чехле, сколов и царапин нет, не вскрывался.\nДонецк, Ленинский район.\n28.000₽\n\n+79495772707- тг\nИли в личные сообщения\n\nЧастное лицо","img":"https://cdn4.telesco.pe/file/UZVctf6553bzAQuMuAce7_fRsFIgWIujH9v2zODZGAoZ74oMTJLqAw6hYXyaUNokWtdZPgSADnPn5fJZHNiu67Y08UiKmbyZj8SF78qvsFIaVup73Lc_wpO9ZsM77xyVEscV4I4ZhZB3Uil2KqK4lgZeQrTga5ru0y1AEc2jkmP-KefNWpcdj5XBPqTWZm2zB7k9rE9p9TjMVbwPrFvpacVXaOWQV25ZfDWloGZgFb6wQOgMvYv7vKHQzpUaLYmvNkcCf9RqYvNppul_dXe9YPX-nOSWBoWg0XvyvX0AC3qJUzjFjGqKXUNpf2K5dPJMT5iWjffYtPezqJw__GboEQ.jpg","phones":["+79495772707"],"users":[],"also":[],"reposted":false},{"id":"donetsk_bu/173238","url":"https://t.me/donetsk_bu/173238","date":"2026-11-24T17:37:55+00:00","model":"Dyson","price":25000,"city":null,"kind":"sell","src":"@donetsk_bu","src_type":"tg_channel","brands":["dyson"],"text":"Продам выпрямитель Dyson Airstrait, б/у, 25 000 ₽\n✨ Продаю оригинальный выпрямитель Dyson Airstrait! ✨\n\nВ отличном состоянии, бережное использование ❤\n\nВ комплекте:\n- Оригинальный выпрямитель Dyson;\n- Фирменный кейс для хранения;\n- Оригинальная коробка.\n\n💰 Стоимость— 25 000 ₽\nТорг уместен для реального покупателя!\n+79499716017","img":"https://cdn4.telesco.pe/file/B_m0dqXxb_-j56D_U0-rafmkaSMLn5ZRjpxzAmbSFcXHU8jLP4Bh7aaNdv95kNRKsVbx5hKDtBZZcuYtFWsdvlbRXSlN97E5-vMlXjfnAmBQOT2X_EVpZXRodFDpcdmfQGIYcMpJZSLanZJlU7Lsmw_CSZ0Xua8X0gxc49PoLrqv_zFDFpG2q1NxeunDnkmopgUWxZ_UVzapF3WDBbz9_Kgw_2_ZWd6zCEdpum0w-VQQPAlJo8mGr3NuJLW9NAYnyPYwO6-VG7JFun8Nb-HFLNYoXpVweLbGA2NugIr5MFpJ4Ac6x2r36PDrBtVra94aLVADJWB41DMdDfCGobeq2w.jpg","phones":["+79499716017"],"users":[],"also":[],"reposted":false},{"id":"clubsellfast/184785","url":"https://t.me/clubsellfast/184785","date":"2026-11-24T14:25:12+00:00","model":"PS4","price":20000,"city":"Шахтёрск","kind":"sell","src":"@clubsellfast","src_type":"tg_channel","brands":["playstation"],"text":"Продам игровой руль Logitech G923 с педалями, б/у, Шахтёрск, 20 000 руб.\nВ наличии! Игровой руль Logitech G923 для ПК и консолей!\n\nСостояние отличное, в пользовании был мало, можно на подарок! Комплект полный, все симуляции и функции работают. Подойдёт для ПК, PS4 и PS5.\n\nВозможна продажа комплектом с Ps4, игрой и телевизором Samsung 32 дюйма.\n\nЦена за руль и педали: 20 000 Руб.\nЦена за PS4 (1Тб), 2 геймпада и диск: 23 000 Руб.\nЦена за телевизор Samsung 32 дюйма: 7000 Руб.\n\nНаходится в Шахтёрске! В другие города ДНР, ЛНР доставка по договорённости!\n\nЗвоните!\nТел. +79495178037 (Есть Телеграм)\nТел. +79493336152 (Есть Макс)","img":"https://cdn4.telesco.pe/file/pwufpaeOaOI2aFub7B5Mtu_xL5dwVuMyhCU49B7_pOQDcV9b8Ckd5V6h2b63AtNCNtwp2Uf3cpWV4irsNq74LaJlGo5qNK0emj7VjcIT5BcSCynMK0YI3CkunmzcoqYg4x2nKYnLG5HVZKKE9bSyh_T1ZWNejkkiNCfUcfZ_pOJ0AClPP-ZcudqjpTtvLu2Nh3A_My3mnAjn9fp_qn2o7RgMhIWWl6KSYV5Q56ysZpFVTELicJT5Ku--B39Abfvn0m1jy79mokjQDavz-TiHr940Sw7xJFW_xHRMA6j0xUpSeX6cqKTGuanDOair7mVxngJ4s23vIprdBWlkS7jDPQ.jpg","phones":["+79495178037","+79493336152"],"users":[],"also":[],"reposted":false},{"id":"appledn/4549","url":"https://t.me/appledn/4549","date":"2026-11-24T12:32:29+00:00","model":"iPhone 15 Pro Max 256GB","price":46000,"city":"Макеевка","kind":"sell","src":"@appledn","src_type":"tg_channel","brands":["apple"],"text":"Продам IPhone 15 Pro Max 256gb 📱\nFace ID, True Tone работают 👍\nАКБ 79%🔋\nСостояние 4/5, есть следы эксплуатации (мелкие царапины на экране) не вскрывался, комплект полный, +защитное стекло 🎁\nЦена 46.000 рублей 💵\nНаходится в городе Макеевка 🌃\nТелефон для связи +79780920603 (МТС) или ЛС ☎️","img":"https://cdn4.telesco.pe/file/v2eiiKbPUtQi3PsLxa0eZM0KqOnxTdkVir6ta-kw6gfBJfg7KpXp75NpyTOiUd93WjAHmuIKgEM_lQVoMdLkFIb2dnyhaI3jw4i5hinkASlzL1u73h9Bg3jvOzzKJi1IDqkDfw62-2PKpCpRLv6VfwEhPy1b29tfFy5_ok2UXtCyVStJaYRhCaG_iOww6SJz2htGSjBY7PukdEJT-kLImhN-g_YdNn0ljOiGAbyemNmXE6w0uGyZF3k276Ea9ZnH6rDf9uLnxqk0EiQiroxxv4K9s1m3-iWcl5bPBdgfHnisJW3X4YzKz8L1GL4FnkMc9GdW0mxrzp3Ccv271ME8Og.jpg","phones":["+79780920603"],"users":[],"also":[],"reposted":false},{"id":"clubsellfast/184774","url":"https://t.me/clubsellfast/184774","date":"2026-11-24T11:53:48+00:00","model":null,"price":null,"city":null,"kind":"sell","src":"@clubsellfast","src_type":"tg_channel","brands":["playstation"],"text":"Продам ноутбуки и игровые консоли, новые и б/у, E-НОУТ\nМагазин\n\n🦝❄ ХОЛОДНЫЕ ВЕЧЕРА СТАНУТ ТЕПЛЕЕ ВМЕСТЕ С E-НОУТ! 💜🔥\n\nЗа окном холода, а дома — уют, любимые игры и отличное настроение! 🎮☕\n\nE-НОУТ поможет провести холодные вечера с максимальным комфортом! 💜\n\nУ нас вас ждёт большой выбор техники и игр:\n\n💻 НОУТБУКИ — новые и Б/У модели для работы, учёбы и захватывающих игровых вечеров!\n\n🎮 ИГРОВЫЕ КОНСОЛИ — PlayStation, Xbox, Nintendo и другие. Выбирайте свою и погружайтесь в любимые игровые миры!\n\n💿 ИГРОВЫЕ ДИСКИ — большой выбор игр на любой вкус! Покупка, продажа и обмен.\n\n🔥 А ещё у нас есть акционные предложения! Следите за обновлениями в разделе товаров и выбирайте то, что по душе!\n\n🛡 Гарант","img":"https://cdn4.telesco.pe/file/NfUcGGp_JKMhAHhXC0KlMLbi0Ofdet7gUuTwzeudg7DhJJ1HhEM8Gtcpi8CyXOOT8uxOWhR6T_T2kyqE_X3OA9ubkBFaJB1v8Xdcg8qW5g8PUhcrrp8P0vL5CGbYcWrAuzaTmzy3mKBaVNwKJW2WrL3jrzrAWG9-a3RV57NOlUKM-YfK5Wvt3EWxYY76MBvXfX9evp2rw4W7P2jumN-U8y8on9c_Ue_rDk7Tn0D37KfP-rBQ0hySBvlciQ6Nb5A6blvxno1ZwKqD2arkJlJvZ1udS_tl7I_wIwgQ0XQn3aZyjMT88Zif1sGQr0CSJ-qk7Qs5XE4adGZgm34Z5mMB_A.jpg","phones":["+79497523607"],"users":[],"also":[],"reposted":false},{"id":"donetsk_bu/173195","url":"https://t.me/donetsk_bu/173195","date":"2026-11-24T11:28:14+00:00","model":null,"price":null,"city":null,"kind":"sell","src":"@donetsk_bu","src_type":"tg_channel","brands":["playstation"],"text":"Продам ноутбуки, игровые консоли и диски, новые и б/у\n🦝❄ ХОЛОДНЫЕ ВЕЧЕРА СТАНУТ ТЕПЛЕЕ ВМЕСТЕ С E-НОУТ! 💜🔥\n\nЗа окном холодно, а дома ждут уют, любимые игры и хорошее настроение! 🎮☕\n\nE-НОУТ поможет сделать холодные вечера комфортнее! 💜\n\nУ нас большой выбор техники и игр:\n\n💻 НОУТБУКИ — новые и Б/У модели для работы, учёбы и увлекательных игровых вечеров!\n\n🎮 ИГРОВЫЕ КОНСОЛИ — PlayStation, Xbox, Nintendo и другие. Выбирайте свою и отправляйтесь в любимые игровые миры!\n\n💿 ИГРОВЫЕ ДИСКИ — игры на любой вкус! Покупка, продажа и обмен.\n\n🔥 Также доступны акционные предложения! Следите за обновлениями в разделе товаров и выбирайте то, что вам по душе!\n\n🛡 Гарантия на технику\n🚚 Курьерская доставка\n✨ Все","img":"https://cdn4.telesco.pe/file/XOL7bWO_h9XaG7RCW-7A75Tq1cWxG1CBInNrXcdrcj4U8b57OafrYPU1fIyGHweexT6ONPvymHRoHasemRlAxrrUEs8YtKSXY3N2CGC1eJeJNLrxMiXIvwg7xFOH5rJHMpJJgJ5DwgaLRhchFnMdp7i9UDiDe0TRWTRAdNwbqTnj5zl6mPkP_svTM9oTC22qVSYQVy-lQuOi_n_nzEybAKF3mKZvgDACXNpX3x3VZYVoq77HH5lFhFzgjgUMDq5sMG-FxPRr6LHLvEKxFuWotFGqg6MaaVVlw-kD59XBcLdqvlSfyakOQZ439ickD9ChiN9v5tXL2qyMV7Xp5o8uTw.jpg","phones":["+79497523607"],"users":[],"also":[],"reposted":false},{"id":"donetsk_bu/173099","url":"https://t.me/donetsk_bu/173099","date":"2026-11-23T16:44:25+00:00","model":"PS5 Slim","price":115000,"city":"Горловка","kind":"sell","src":"@donetsk_bu","src_type":"tg_channel","brands":["playstation"],"text":"Продам Sony PlayStation 5 Slim с дисководом, 3-я ревизия, VR-очки, б/у, Горловка, 115000\nSony PlayStation 5 Slim PS5 с дисководом 3 ревизия + Виар очки для ps5\nДве подстанции для пс и Виар\nСостояние хорошее, вся комплектация и коробки\nЦена 115000 (торг)\nПо вопросам в ЛС или тел\nГ. Горловка\n+79494853518","img":"https://cdn4.telesco.pe/file/FEiNcf6gvOGBZLQ3O--vwyThVw9Iwhov8vUlrnRhTpvoAvA2XYj0oAiAA5MxZdd6aCA6vV27qr1V4EVxXaDQ4jgUWWU8HbIpH9CYiQyc9Ey7DyIWYQPOnvdlxLZJDpK4DPMJT5FBqDh-ZGNrdv212bXKNaZjWWtl2u2Ec2kT_uvj3RhrbPlvYIDIqeUZKTHTjbAT5QwpGUU75dZRWVitgxK6sWUw2fKs_tokTGuVDFZwoefpbbKvu0qLY56T1kQ3rMbqIc75iFzmjjhb21AvG9yO11wplyjd4-SBhYyfUHcGpCTz14CSoCiTQEzhC1D7Is7a0zHkRMGhJO8sVVyO9g.jpg","phones":["+79494853518"],"users":[],"also":[],"reposted":false},{"id":"clubsellfast/184611","url":"https://t.me/clubsellfast/184611","date":"2026-11-23T16:04:35+00:00","model":"iPhone 13 128GB","price":null,"city":"Донецк","kind":"sell","src":"@clubsellfast","src_type":"tg_channel","brands":["apple"],"text":"Продам iPhone 13, 128 ГБ, новый, Донецк, 21.5\nАйфон 13 (128), аккумулятор 100%, новый оригинальный. Комплект: чехол, зарядный шнур и стекло. Без коробки. Цена 21.5. Без обмена. Донецк 79495102741","img":"https://cdn4.telesco.pe/file/CU_mDOOWlvgR70sA2cPSrwg5LbFkSJ1MQRbmWDNuC3TzGA9z9-QlbMOLqUfvgHKxD_O6tPhf5z6dLjzK4BjxVv5dAgkjxoQhnPNOWIqZPqtVsiqH5jEuDXJccf5RoI2cRUNLiz9n5XBMzSSSVWT3xmgPzadOPpHfwy7OA21jrIOUKlTAiFHa-blngCTthp4MLErtB2EgIYDpcCIeYrHRFvJbqPzAiHFwhXnERgbdV9cRpibkttsP_Z7sFZx866yA4gPXlUclFK9ZbswyAe0q6iV55-sX6GtxbqOWZTxnjW2DprsD4PDkmAqb5tCp7uzAMFEWzc8YKHMQDs2sP1kubA.jpg","phones":["+79495102741"],"users":[],"also":[],"reposted":false},{"id":"appledn/4547","url":"https://t.me/appledn/4547","date":"2026-11-23T12:52:10+00:00","model":"iPhone 15 Pro Max 256GB","price":50000,"city":"Донецк","kind":"sell","src":"@appledn","src_type":"tg_channel","brands":["apple"],"text":"Продам iPhone 15 Pro Max 256 гб натуральный титан\nСостояние отличное без царапин и потертостей\nАКБ 86% оригинальный\nНе ремонтировался и не вскрывался\nКомплект - коробка зарядка и чехлы\nЦена - 50000 рублей\nДля связи +79495419706\nДонецк","img":"https://cdn4.telesco.pe/file/OR-TrfExK02jVoIctLGK68UAX3ygJtvn1CuckUWIcQJeO_YJXlKRwZEmeSxkYUen7povSi5CNz9fYbX5SnkgXJpRlY30-jL2Pr0NezlLTts4CYO7j-3o2J5KVAn8DZ5PDJ7jac8OAhGNUaMH5FQE7k5UtGdIoxUe2_pYl_K88R52YId2HSC9-KFsTRYxihMeV-uzXMgj-w4FiQRBlMn97nsxDWpDFCklHm8dvg8zeABgvk-yNAguWw1bzX8uEbb0QiO5HTz5bcreYAJ940TbrBy3bH34UJoOKe7Zfk8Ljyo7zjBtY9Im-2cXnkVFMcbRzEFdJvFmyyXNfW2-1BLbmw.jpg","phones":["+79495419706"],"users":[],"also":[],"reposted":false},{"id":"donetsk_bu/173060","url":"https://t.me/donetsk_bu/173060","date":"2026-11-23T11:42:54+00:00","model":null,"price":null,"city":null,"kind":"sell","src":"@donetsk_bu","src_type":"tg_channel","brands":["apple"],"text":"Продам новые и б/у смартфоны, эксклюзивные модели, «Точка техники»\n🔥📱 ЭКСКЛЮЗИВНЫЕ И Б/У СМАРТФОНЫ В «ТОЧКЕ ТЕХНИКИ»! 📱🔥\n\nРедкие, интересные и эксклюзивные модели регулярно появляются в нашем ассортименте — такие смартфоны найдёшь не в каждом магазине!\n\n📢 Мы в Telegram:\nhttps://t.me/tochkatekhniki_don\n\n💎 НОВЫЕ ЭКСКЛЮЗИВНЫЕ МОДЕЛИ:\n\n🚀 ONEPLUS: 15, 15T, 15R, 13, 13T, 13R\n\n📸 VIVO: X300, X300 Pro, X300 Ultra, X200, X200 Pro\n\n🔥 XIAOMI: 18, 18 Pro, 18 Pro Max, 18 Ultra, 17 Pro, 17 Pro Max, 17 Ultra, MIX Flip, MIX Fold\n\n♻ ВЫБИРАЙТЕ ИЗ БОЛЬШОГО АССОРТИМЕНТА Б/У УСТРОЙСТВ:\n\n🍏 Apple iPhone\n📱 Samsung Galaxy\n🔥 Xiaomi / Redmi / POCO\n⚡ OPPO\n🚀 OnePlus\n\n📦 Ассортимент постоянно пополняется! Не нашли нужную м","img":"https://cdn4.telesco.pe/file/a2Yk2Ug6o0ETB7EMY7eaYkpV18Fj1dB0u7Cbn7fc_6YR9fSMmzCMylJzMNzwlAX0vVrSOazSOb005SflKwsS3mwex2ODXFz9pXWtGB4Bcvixbh1jMO_gBNYJDn4UmpSML4MNzQalJFPCOp0RLWoB_A3NMeVo3DFiXhSWgZqXXRH12UM2mFqFLD2-Vew2utf7lj5zQOxjcxXU5EOJdleRxWUMtZibCzO8p6rEl4sk6seged_5YOQxiOZO0udQ3v-KBIMHg0UzrnBA36qGVnbQ4-maRlkE2IHzj1uJ5wRSPfNpJsuhHghX34gQOyU1J5HcxKu61m7Ch2-LF-Y8FoMJ0w.jpg","phones":["+79490172878","+79490892324","+79495138365"],"users":["tochkatekhniki_don"],"also":[],"reposted":false},{"id":"donetsk_bu/173054","url":"https://t.me/donetsk_bu/173054","date":"2026-11-23T10:22:58+00:00","model":"iPhone 15 Pro","price":450,"city":"Донецк","kind":"sell","src":"@donetsk_bu","src_type":"tg_channel","brands":["apple"],"text":"Продам новые чехлы для iPhone 15 Pro и iPhone 16 Pro, Донецк, от 300 руб.\n🔥 ДОНЕЦК Продам новые чехлы для iPhone 15 Pro (LUXO) и для IPhone 16 pro\nВ упаковке, не вскрывались. Материал TPU (мягкий, защищает от ударов).\n\nЕсть два крутых принта:\n⚡ Пикачу\n🎨 Kaws (Bar Dope)\n\nЦена: на 15 про — 450руб.\nна 16 про — 300руб.\n\n📞🇷🇺 Звоните: +79490297254","img":"https://cdn4.telesco.pe/file/Lf2mAN-QZ2cC_y7ZdwFqN2O1c4zjUUvSgzcstmSBe2HmIhNrDs7UTA7DauqAT5ik5RY8iEnZASx6cyd_o50y8oGUaIcsSYrx6HxBFc4tfoDo3L_GeumfVDcqLSP2NUc6E4Rvqduv0HYDpxbFETZfWtM0ErbUMGgRSMRMZl6Ca6EAjctqJmixKIcZx70Hzo2Qs36XWJN8jaFTRcdC3q4SPwNA70li10yD-OgywNmDgtJY6wNrCFV2-pfHh6el1t-9QRf9zNvoWEajh1RMpSQW0OpWa1yrx9c_FzRJAS3XlZJz1ac4WqCAD-DLYNtZH93M6Tcf1G29U9A95G1GXVGQQw.jpg","phones":["+79490297254"],"users":[],"also":[],"reposted":false},{"id":"donetsk_bu/173045","url":"https://t.me/donetsk_bu/173045","date":"2026-11-23T09:04:13+00:00","model":"iPhone 16 128GB","price":42000,"city":"Макеевка","kind":"sell","src":"@donetsk_bu","src_type":"tg_channel","brands":["apple"],"text":"Продам iPhone 16 128 ГБ, б/у, Макеевка, 42 000 ₽\nПродам свой iPhone 16/128 black. Состояние отличное: без сколов и царапин, экран в идеале. Батарея — 94%. Все функции работают на 100%. Телефон сброшен до заводских настроек.\n\nВ комплекте всё родное, чек о покупке, блок зарядки, чехлы и новое защитное стекло на экран — старое снял перед продажей. Причина продажи: так и не смог привыкнуть к яблоку).\n\nЦена — 42 000₽, торга и обмена нет и не будет. Тел. для связи 79493355787. На смотрины не езжу: забираем на Холодной Балке в Макеевке или на Плеханово, но в 17:00 после работы.\n\nЧастное лицо","img":"https://cdn4.telesco.pe/file/lG_BhYxeImfFEe-efvKwOXdF6S1PfIaXL5i7_RQSV4zvlUEbcKp-JTLHSSCtOOId89at2EWnEd40aAHeyNsdc7X-gzGclviBiFGLs-ptLf7VrsZEXaMrRudOTMmPeeQkxf0NUCmPsCiRyY16AcJ_j-9gPcLBQQ73GCZ0hMvqogcq8QNMer3EVU5dNl0EKIhp6aTWkBPIlIVMf-TGpOSLSOAswrZGoypGxAkTd2JpvAbeTbBkH69SOd_tIlHYPOuwr5JdomWsnLO2Z5lc-IVxIu7oVm01QymK6VGesMC5esMgkl3W7Ww_4tHRc5EroNL5Drxjs5nxjLdoGyBi8hr8RA.jpg","phones":["+79493355787"],"users":[],"also":[],"reposted":false},{"id":"appledn/4538","url":"https://t.me/appledn/4538","date":"2026-11-19T10:56:12+00:00","model":"iPhone 16 Pro Max 512GB","price":67990,"city":"Донецк","kind":"sell","src":"@appledn","src_type":"tg_channel","brands":["apple"],"text":"💙 В НАЛИЧИИ ‼️ \niPhone 16 Pro Max 512 гб\n➖➖➖➖➖➖➖➖➖➖\n- SIM +eSIM \n- Состояние: 9.9/10 \n- Акб: 91% (родной)\n- Face ID, True Tone\n- В ремонтах не был, не вскрывался.\n- Любые ваши проверки на месте.\n- Комплект: коробка, скрепка, зарядка, чехол. \n‼️ Цена: 67.990 руб торг ‼️\n🚀 Личная встреча г. Донецк\n✅ Гарантия 2 недели\n➖➖➖➖➖➖➖➖➖➖\n😎 По всем вопросам писать:\n@vextazzy0 или +79493360805","img":"https://cdn4.telesco.pe/file/L3zBowpCP9TdGoBbh-mKnCon2OW0lGTOIMc9Gg1AhoHdI-fW7RsGMq3Dfrm_tO9L1NyTSpr0G7FD0OhXBMaWx2VUZ_scnC9vGaii0C3oik5ja6uKi5R2FX56BrdpiYdJxq419zdqIqW4pbAnc6QAPm61s0KrSuY6hDRoar-xsfZDwlSHK7hF4wzPhI0wfuVJ7LLCrjYFpEC3nz_YoCbCuoz9gqbYCQ3tKExJ9P_-T261KfG6Uo9jD3ir8S7y1fVDfHmlTNfWqeYgicbm5kSp69aJg7dLovVcJ0vlePFcja-WdaEkMkoJts-GCCuCaE5xjNvhYIrgnhkTKgXVd6Tqdg.jpg","phones":["+79493360805"],"users":["vextazzy0"],"also":[],"reposted":false}]}</script>
+
+<script>
+(function(){
+'use strict';
+const $ = s => document.querySelector(s);
+const readJSON = id => { try { return JSON.parse(document.getElementById(id).textContent); } catch(e) { return {}; } };
+const CFG = readJSON('radar-config');
+const SNAP = readJSON('radar-snapshot');
+const LS = {get(k,d){try{const v=localStorage.getItem('radar:'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+            set(k,v){try{localStorage.setItem('radar:'+k,JSON.stringify(v))}catch(e){}}};
+const PAGE = 60;
+const S = {feed: null, live: false, lastOk: null, brands: LS.get('brands', []), known: null, fresh: new Set(), shown: PAGE, error: null};
+const fmt = n => n ? n.toLocaleString('ru-RU') + ' ₽' : '';
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : '#';
+const SRC_BADGE = {tg_channel:'', tg_chat:'<span class="b tg_chat">TG-чат</span>', vk:'<span class="b vk">VK</span>'};
+const SRC_NAMES = {tg_channel:'Telegram-каналы', tg_chat:'Telegram-чаты', vk:'Группы ВКонтакте'};
+
+/* ---------- тема ---------- */
+const theme = LS.get('theme', null);
+if (theme) document.documentElement.setAttribute('data-theme', theme);
+$('#btnTheme').onclick = () => {
+  const cur = document.documentElement.getAttribute('data-theme') ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next); LS.set('theme', next);
+};
+
+/* ---------- время ---------- */
+function ago(iso, base){
+  if (!iso) return '';
+  const s = ((base || Date.now()) - new Date(iso).getTime()) / 1000;
+  if (s < 60) return 'только что';
+  if (s < 3600) return Math.floor(s/60) + ' мин назад';
+  if (s < 86400) return Math.floor(s/3600) + ' ч назад';
+  return new Date(iso).toLocaleString('ru-RU', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+}
+const dateStr = iso => iso ? new Date(iso).toLocaleString('ru-RU', {day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'}) : '—';
+
+/* ---------- загрузка свежей ленты ---------- */
+function dataUrls(){
+  const q = new URLSearchParams(location.search).get('data');
+  if (q && /^https?:\/\//.test(q)) return [{url: q}];
+  if (!CFG.repo) return [];
+  const br = encodeURIComponent(CFG.branch || 'data');
+  return [
+    {url: 'https://api.github.com/repos/' + CFG.repo + '/contents/feed.json?ref=' + br, headers: {'Accept': 'application/vnd.github.raw'}},
+    {url: 'https://raw.githubusercontent.com/' + CFG.repo + '/' + br + '/feed.json?t=' + Math.floor(Date.now()/60000)}
+  ];
+}
+async function fetchFeed(){
+  for (const src of dataUrls()) {
+    try {
+      const r = await fetch(src.url, {headers: src.headers || {}, cache: 'no-cache'});
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const j = await r.json();
+      if (j && Array.isArray(j.items)) return j;
+    } catch(e) { S.error = e.message; }
+  }
+  return null;
+}
+async function refresh(){
+  const fresh = await fetchFeed();
+  if (fresh) { S.feed = fresh; S.live = true; S.lastOk = Date.now(); S.error = null; }
+  else if (!S.feed) { S.feed = SNAP; S.live = false; }
+  render(false);
+}
+
+/* ---------- фильтры ---------- */
+for (const id of ['src','city','min','max','days','kind','q']) {
+  const el = $('#'+id); const saved = LS.get(id, null);
+  if (saved !== null && (el.tagName !== 'SELECT' || [...el.options].some(o => o.value == saved))) el.value = saved;
+  el.addEventListener(['q','min','max'].includes(id) ? 'input' : 'change', () => { LS.set(id, el.value); S.shown = PAGE; render(true); });
+}
+for (const id of ['snd','ntf']) { const el = $('#'+id); el.checked = LS.get(id, false);
+  el.addEventListener('change', () => { LS.set(id, el.checked);
+    if (id === 'ntf' && el.checked && 'Notification' in window) Notification.requestPermission(); }); }
+
+function renderBrands(map){
+  const box = $('#brands'); box.innerHTML = '';
+  const mk = (label, on, fn) => { const c = document.createElement('button'); c.className = 'chip' + (on ? ' on' : ''); c.textContent = label; c.onclick = fn; box.appendChild(c); };
+  mk('Все бренды', !S.brands.length, () => { S.brands = []; LS.set('brands', []); renderBrands(map); render(true); });
+  for (const [k, title] of Object.entries(map || {}))
+    mk(title, S.brands.includes(k), () => { S.brands = S.brands.includes(k) ? S.brands.filter(x => x !== k) : S.brands.concat(k);
+      LS.set('brands', S.brands); renderBrands(map); render(true); });
+}
+
+function filtered(){
+  const f = S.feed || {items: []};
+  const base = S.live ? Date.now() : (f.generated ? new Date(f.generated).getTime() : Date.now());
+  const hours = parseFloat($('#days').value) * 24;
+  const src = $('#src').value, city = $('#city').value, kind = $('#kind').value;
+  const min = parseInt($('#min').value) || 0, max = parseInt($('#max').value) || 0;
+  const words = $('#q').value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  return f.items.filter(it => {
+    if (hours && it.date && base - new Date(it.date).getTime() > hours * 3600e3) return false;
+    if (S.brands.length && !it.brands.some(b => S.brands.includes(b))) return false;
+    if (src && it.src_type !== src) return false;
+    if (city === '__none__' ? it.city : (city && it.city !== city)) return false;
+    if (kind !== 'all' && it.kind !== kind) return false;
+    if (min && !(it.price >= min)) return false;
+    if (max && !(it.price && it.price <= max)) return false;
+    if (words.length) { const hay = ((it.text || '') + ' ' + (it.model || '')).toLowerCase(); if (!words.every(w => hay.includes(w))) return false; }
+    return true;
+  });
+}
+
+/* ---------- карточки ---------- */
+function title(it){
+  const line = (it.text || '').split('\n').map(s => s.replace(/[^\p{L}\p{N}()+.,:\/ -]/gu, '').trim()).find(s => s.length > 3) || '';
+  return (line.length > 90 ? line.slice(0, 88) + '…' : line) || it.model || 'Объявление';
+}
+function phonePretty(p){ const m = p.match(/^\+7(\d{3})(\d{3})(\d{2})(\d{2})$/); return m ? `+7 ${m[1]} ${m[2]}-${m[3]}-${m[4]}` : p; }
+function contactLink(u){
+  if (u.startsWith('vk:')) return `<a href="https://vk.com/id${esc(u.slice(3))}" target="_blank" rel="noopener">💬 VK продавца</a>`;
+  if (u.startsWith('id:')) return `<a href="tg://user?id=${esc(u.slice(3))}">✈️ написать продавцу</a>`;
+  return `<a href="https://t.me/${esc(u)}" target="_blank" rel="noopener">✈️ @${esc(u)}</a>`;
+}
+function card(it, base){
+  const brands = (S.feed && S.feed.brands) || {};
+  const img = it.img ? `style="background-image:url('${esc(safeUrl(it.img))}')"` : '';
+  const contacts = [...(it.phones || []).map(p => `<a href="tel:${esc(p)}">📞 ${esc(phonePretty(p))}</a>`), ...(it.users || []).map(contactLink)].join('')
+    || `<a href="${esc(safeUrl(it.url))}" target="_blank" rel="noopener">контакт в посте →</a>`;
+  const also = (it.also || []).length ? `<div class="also">Тот же пост ещё ${it.also.length > 1 ? 'в ' + it.also.length + ' местах' : 'в одном месте'}:
+      ${it.also.slice(0, 4).map(a => `<a href="${esc(safeUrl(a.url))}" target="_blank" rel="noopener">${esc(a.src)}</a>`).join('')}</div>` : '';
+  return `<article class="card${S.fresh.has(it.id) ? ' fresh' : ''}">
+    <div class="ph" ${img}>${it.img ? '' : '<div class="noimg">без фото</div>'}
+      <div class="badges">${S.fresh.has(it.id) ? '<span class="b new">НОВОЕ</span>' : ''}
+        ${it.kind === 'buy' ? '<span class="b buy">КУПЛЮ</span>' : ''}${SRC_BADGE[it.src_type] || ''}
+        ${it.reposted ? '<span class="b rep">перезалив</span>' : ''}
+        ${(it.brands || []).map(b => `<span class="b">${esc(brands[b] || b)}</span>`).join('')}</div>
+    </div>
+    <div class="body">
+      <div class="model">${esc(title(it))}</div>
+      ${it.model ? `<div><span class="tag">${esc(it.model)}</span></div>` : ''}
+      <div class="price ${it.price ? '' : 'none'}">${it.price ? fmt(it.price) : 'цена не указана'}</div>
+      <div class="meta"><span>📍 ${esc(it.city || 'город не указан')}</span><span>🕒 ${ago(it.date, base)}</span></div>
+      <div class="contacts">${contacts}</div>
+      <div class="txt" tabindex="0">${esc(it.text)}</div>
+      ${also}
+      <div class="foot"><span class="src">${esc(it.src)}</span>
+        <a href="${esc(safeUrl(it.url))}" target="_blank" rel="noopener">Открыть пост →</a></div>
+    </div></article>`;
+}
+document.addEventListener('click', e => { const t = e.target.closest('.txt'); if (t) t.classList.toggle('open'); });
+
+let beepCtx;
+function beep(){
+  try { beepCtx = beepCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = beepCtx.createOscillator(), g = beepCtx.createGain();
+    o.frequency.value = 880; g.gain.setValueAtTime(.15, beepCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001, beepCtx.currentTime + .35);
+    o.connect(g).connect(beepCtx.destination); o.start(); o.stop(beepCtx.currentTime + .35);
+  } catch(e) {}
+}
+
+let brandsRendered = false;
+function render(userAction){
+  const f = S.feed || {items: []};
+  if (!brandsRendered) { renderBrands(f.brands); brandsRendered = true; }
+  // города
+  const sel = $('#city'), cur = LS.get('city', sel.value);
+  const cities = f.cities || [];
+  sel.innerHTML = '<option value="">Все города</option>' + cities.map(c => `<option>${esc(c)}</option>`).join('') + '<option value="__none__">Город не указан</option>';
+  sel.value = [...sel.options].some(o => o.value === cur) ? cur : '';
+  // новые объявления (только в живом режиме)
+  const ids = new Set(f.items.map(i => i.id));
+  if (S.live && !S.liveInit) { S.liveInit = true; S.known = null; }   // первая живая загрузка — ничего не подсвечиваем
+  if (S.known && S.live && !userAction) {
+    const newOnes = f.items.filter(i => !S.known.has(i.id));
+    newOnes.forEach(i => S.fresh.add(i.id));
+    if (newOnes.length) {
+      if ($('#snd').checked) beep();
+      if ($('#ntf').checked && 'Notification' in window && Notification.permission === 'granted')
+        newOnes.slice(0, 3).forEach(it => { const n = new Notification(`${it.model || 'Новое объявление'} — ${it.price ? fmt(it.price) : 'цена ?'}`, {body: `${it.city || ''} · ${it.src}`}); n.onclick = () => window.open(safeUrl(it.url), '_blank'); });
+      document.title = `(${S.fresh.size}) ${CFG.title || 'Радар техники ДНР'}`;
+    }
+  }
+  if (S.live || !S.known) S.known = ids;
+  // лента
+  const base = S.live ? Date.now() : (f.generated ? new Date(f.generated).getTime() : Date.now());
+  const items = filtered();
+  $('#grid').innerHTML = items.slice(0, S.shown).map(it => card(it, base)).join('');
+  $('#more').hidden = items.length <= S.shown;
+  $('#empty').hidden = items.length > 0;
+  const priced = items.filter(i => i.price).map(i => i.price).sort((a, b) => a - b);
+  const med = priced.length ? priced[Math.floor(priced.length / 2)] : null;
+  const dups = items.reduce((n, i) => n + (i.also || []).length, 0);
+  $('#summary').textContent = `Найдено: ${items.length}` + (med ? ` · медианная цена ${fmt(med)}` : '') + (dups ? ` · склеено дублей: ${dups}` : '');
+  // статус
+  const dot = $('#dot'), notice = $('#notice');
+  if (S.live) {
+    dot.className = 'dot live';
+    $('#stat').textContent = 'Живая лента · данные от ' + ago(f.generated);
+    notice.hidden = true;
+  } else {
+    dot.className = 'dot snap';
+    $('#stat').textContent = 'Снимок от ' + dateStr(f.generated);
+    notice.hidden = false;
+    notice.innerHTML = f.items.length
+      ? `Показан <b>сохранённый снимок ленты</b> от ${esc(dateStr(f.generated))}. ` + (CFG.repo ? 'Свежие данные сейчас недоступны — страница попробует снова через пару минут.' : 'Живое обновление ещё не настроено.')
+      : 'Лента пока пустая: снимок ещё не собран. ' + (CFG.repo ? 'Ждём свежие данные…' : '');
+  }
+  // источники
+  const groups = {};
+  (f.sources || []).forEach(s => (groups[s.type] = groups[s.type] || []).push(s));
+  const cats = f.categories || {};
+  $('#srcList').innerHTML = Object.keys(groups).map(t => `<li><b>${esc(SRC_NAMES[t] || t)}:</b> ` +
+    groups[t].map(s => esc(s.title) + (s.category && s.category !== 'general' ? `<span class="pill">${esc(cats[s.category] || s.category)}</span>` : '')).join(', ') + '</li>').join('')
+    || '<li>Список появится после первой публикации ленты.</li>';
+  $('#footer').textContent = `${CFG.title || 'Радар техники ДНР'} · обновление каждые ~${Math.round((CFG.refresh_sec || 120) / 60)} мин · объявлений в базе: ${f.items.length}`;
+}
+$('#more').onclick = () => { S.shown += PAGE; render(true); };
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { document.title = CFG.title || 'Радар техники ДНР'; } });
+
+/* ---------- старт ---------- */
+S.feed = SNAP; S.live = false;
+render(true);                       // мгновенно показываем встроенный снимок
+refresh();                          // и сразу пробуем получить свежую ленту
+setInterval(refresh, Math.max(60, CFG.refresh_sec || 120) * 1000);
+setInterval(() => { if (S.live) render(true); }, 30000);   // обновляем «N мин назад»
+})();
+</script>
+</body>
+</html>
